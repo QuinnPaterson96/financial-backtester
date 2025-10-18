@@ -1,7 +1,7 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.5.6'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springframework.boot' version '3.3.3'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'java'
 }
 
 group = 'com.quinn.backtester'
@@ -10,7 +10,7 @@ description = 'Provides replay of historic market data for financial backtesting
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(25)
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
@@ -30,11 +30,18 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // --- Data layer (Parquet + DuckDB) ---
+    implementation 'org.duckdb:duckdb_jdbc:0.10.0'
+    implementation 'org.apache.parquet:parquet-avro:1.13.1'
+    implementation 'org.apache.parquet:parquet-column:1.13.1'
+    implementation 'org.apache.parquet:parquet-common:1.13.1'
+    implementation 'org.apache.arrow:arrow-vector:15.0.2'
+
 }
 
 tasks.named('test') {
