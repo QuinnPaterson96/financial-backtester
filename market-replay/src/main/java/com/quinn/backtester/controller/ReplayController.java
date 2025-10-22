@@ -1,21 +1,25 @@
-package com.quinn.backtester.controller;
-
-import com.quinn.backtester.service.ParquetReaderService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 @RestController
+@RequestMapping("/replay")
+@RequiredArgsConstructor
 public class ReplayController {
+    private final ReplayService replayService;
 
-    private final ParquetReaderService parquetReaderService;
-
-    public ReplayController(ParquetReaderService parquetReaderService) {
-        this.parquetReaderService = parquetReaderService;
+    @PostMapping("/start")
+    public ResponseEntity<String> start(@RequestBody ReplayRequest req) {
+        replayService.startReplay(req);
+        return ResponseEntity.ok("Started replay for " + req.getDataset());
     }
 
-    @GetMapping("/replay/test")
-    public String testReplay() {
-        parquetReaderService.testRead();
-        return "✅ Parquet read successful — check console logs.";
-    }
+    @PostMapping("/pause")  public void pause() { replayService.pause(); }
+    @PostMapping("/resume") public void resume() { replayService.resume(); }
+    @PostMapping("/stop")   public void stop() { replayService.stop(); }
+
+    @PostMapping("/speed")
+    public void setSpeed(@RequestBody SpeedRequest req) { replayService.setSpeed(req.getSpeed()); }
+
+    @PostMapping("/seek")
+    public void seek(@RequestBody SeekRequest req) { replayService.seek(req.getTargetInstant()); }
+
+    @GetMapping("/status")
+    public ReplayStatus status() { return replayService.getStatus(); }
 }
