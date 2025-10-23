@@ -1,4 +1,4 @@
-package com.quinn.backtester.service;
+package com.quinn.backtester.services;
 
 import org.springframework.stereotype.Service;
 import java.sql.*;

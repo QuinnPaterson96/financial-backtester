@@ -1,3 +1,9 @@
+package com.quinn.backtester.dto;
+
+import lombok.Data;
+
+import java.time.Instant;
+
 @Data
 public class SeekRequest {
     private String targetDate;

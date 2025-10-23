@@ -1,3 +1,7 @@
+package com.quinn.backtester.dto;
+
+import lombok.Data;
+
 @Data
 public class ReplayRequest {
     private String dataset;
